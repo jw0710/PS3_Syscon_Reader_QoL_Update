@@ -1,0 +1,31 @@
+pyserial
+customtkinter
+pycryptodome
+matplotlib
+```
+
+
+
+### 3. **.gitignore** (verhindert Upload unnötiger Dateien)
+```
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
