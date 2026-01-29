@@ -412,7 +412,6 @@ python ps3_uart_SIMPLIFIED_WORKING.py
 This project builds upon extensive community work:
 
 - **M4j0r** (PSX-Place Forum) - Reverse engineering contributions
-- **db260179** - Original [ps3syscon](https://github.com/db260179/ps3syscon) foundation
 - **PSX-Place Community** - Frankenstein mod documentation
 - Special thread: [Frankenstein PHAT PS3 CECHA with 40nm RSX](https://www.psx-place.com/threads/frankenstein-phat-ps3-cecha-with-40nm-rsx.28069/)
 
