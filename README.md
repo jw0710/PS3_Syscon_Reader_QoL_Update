@@ -367,13 +367,16 @@ python ps3_uart_SIMPLIFIED_WORKING.py
 ##  Screenshots
 
 ### Main Interface
-![Main Interface](screenshots/main.png)
+![Main Interface](Screenshots/CRXPatcher.PNG)
 
 ### Fan Curve Editor
-![Fan Editor](screenshots/fan-curve.png)
+![Fan Editor](Screenshots/FanCurve_with_PreSets.PNG)
+
+### RSX Patcher
+![RSX Patcher](Screenshots/RSXPatcher40nm.PNG)
 
 ### Quick Commands
-![Quick Commands](screenshots/quick-commands.png)
+![Quick Commands](Screenshots/quick_commands_Tab.PNG)
 
 ##  Usage Guide
 
