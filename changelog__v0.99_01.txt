@@ -1,0 +1,191 @@
+# Changelog - PS3 RSX Advanced Patching Tool
+
+## Version 0.99.01 - Prerelease (2024-02-01)
+
+### Major Features
+
+#### CXRF Mode Support
+- Added full support for CXRF (patched Mullion syscons)
+- CXRF uses internal mode authentication (scopen protocol)
+- Proper baudrate handling: CXR = 57600, CXRF/SW = 115200
+- Fixed serial communication timing for internal mode commands
+
+#### CXR to CXRF Patcher
+- One-click patcher to convert CXR syscons to CXRF mode
+- Patches EEPROM address 0x3961 from FF to 00
+- Automatic verification after patching
+- Multi-step workflow:
+  1. Success notification
+  2. Shutdown instruction (at PSU switch)
+  3. DIAG wire connection prompt
+  4. Automatic program restart in CXRF mode
+
+#### Smart Button Management
+- All patch buttons disabled until authentication
+- CXR to CXRF patcher only active in CXR mode
+- Checksum correction only active in CXRF mode (after auth)
+- Context-aware button states based on mode and authentication status
+
+#### Checksum Correction
+- Auto-detect checksum errors from "eepcsum" output
+- Automatic endian-swapping for correct byte order
+- Handles both 2-byte and 4-byte correction values
+- Special handling for FFFF-prefixed values
+- Interactive confirmation before applying fixes
+
+#### RSX Swap Checksum Correction
+- Specialized tool for addresses 0x32FE and 0x34FE
+- Automatic endian-swap for RSX-related checksums
+- Interactive byte-by-byte correction with verification
+
+#### Auto-Restart Workflow
+- Seamless CXR to CXRF transition with program restart
+- Auto-selects CXRF mode after restart
+- Checksum reminder popup if console needs fixing
+- Detects restart via "--cxrf-restart" command line flag
+
+#### Fan Curve Editor (FAT PS3)
+- Visual fan curve editor with interactive graph (matplotlib)
+- Support for 5-phase fan tables (CELL and RSX)
+- Drag-and-drop curve editing
+- Load/Save to console EEPROM
+- Multiple presets (Stock, Quiet, Performance)
+- Only available for CXRF mode (FAT consoles)
+- Real-time graph updates
+
+### Technical Improvements
+
+#### Serial Communication
+- **CRITICAL FIX**: Proper baudrate selection for CXRF
+  - CXR: 57600 baud (external mode)
+  - CXRF: 115200 baud (internal mode) - This was the main bug!
+  - SW: 115200 baud
+- Improved "receive()" method for CXRF internal commands
+- Extended timeout and multi-read for complete responses
+- Proper handling of "[mullion]$" prompt detection
+
+#### Authentication System
+- Dual authentication paths:
+  - External mode (CXR, SW): AUTH1/AUTH2 commands
+  - Internal mode (CXRF): scopen with raw hex auth
+- Fixed auth type detection logic
+- Sandbox mode for testing without hardware
+
+#### Command Protocol
+- CXR: Checksummed protocol ("C:XX:command")
+- SW: Checksummed protocol ("command:XX")
+- CXRF: Raw protocol ("command\r\n")
+- Proper response parsing for each mode
+
+#### Output Formatting
+- Mode-aware output formatting in "_format_command_output()"
+- Proper hex formatting for CXR/SW responses
+- Raw text formatting for CXRF responses
+- Console-style output for better readability
+
+### UI/UX Improvements
+
+#### Modern GUI (CustomTkinter)
+- Dark theme with professional appearance
+- Tab-based interface:
+  - Advanced Patching (main operations)
+  - Quick Commands (common syscon commands)
+  - Manual Commands (raw UART access)
+  - Fan Settings (FAT consoles only)
+- Real-time status indicators
+- Color-coded authentication status (red/green)
+- Professional dialogs without emojis
+
+#### Smart UI States
+- Connection settings with port auto-detection
+- SC Type selection (CXR, CXRF, SW)
+- Dynamic button enabling based on:
+  - Authentication status
+  - Selected SC type
+  - Console state (running/stopped)
+- Clear visual feedback for all operations
+
+#### Enhanced Logging
+- Separate output logs for each tab
+- Syntax-highlighted command output
+- Error messages with context
+- Progress indicators for multi-step operations
+
+### Quick Commands Tab
+
+Pre-configured buttons for common operations:
+- Start/Stop Console (bringup/shutdown)
+- Show Error Log ("errlog")
+- Firmware Checksum ("csum")
+- EEPROM Checksum ("eepcsum")
+- Clear Error Log ("clearerrlog")
+- Get Temperatures ("tsensor")
+- Boot/Error Count ("becount")
+- Get RTC ("getrtc")
+
+### Manual Commands Tab
+
+- Direct UART command input
+- Command history
+- Comprehensive help documentation
+- Full list of internal syscon commands
+- Examples for common operations
+
+### Safety Features
+
+- Authentication required before any patching operations
+- Confirmation dialogs for destructive operations
+- Automatic verification after patches
+- Clear warnings for incompatible operations
+- Sandbox mode for safe testing
+
+### Bug Fixes
+
+- Fixed CXRF authentication failure (baudrate was set to 57600 instead of 115200)
+- Fixed checksum parsing for multi-line outputs
+- Fixed response truncation in internal mode
+- Fixed button state management edge cases
+- Fixed serial port cleanup on exit
+- Removed debug output from production code
+- Fixed emoji display issues in dialogs
+
+### Documentation
+
+- Inline help text for all features
+- Tool-tips for complex operations
+- Command reference in Manual Commands tab
+- Clear error messages with suggested fixes
+
+### Workflow Example
+
+**Typical CXR to CXRF Conversion:**
+1. Connect to CXR syscon
+2. Click "AUTH PS3"
+3. Click "CXR to CXRF Patcher"
+4. Program verifies and patches EEPROM
+5. Shutdown console at PSU
+6. Connect DIAG wire to ground
+7. Program auto-restarts in CXRF mode
+8. Fix checksum if needed
+9. Done - Console is now CXRF
+
+---
+
+## Known Limitations
+
+- Fan Curve Editor only works with CXRF (Mullion) syscons
+- Requires Python 3.7+ with pyserial, pycryptodomex, customtkinter
+- Matplotlib required for Fan Curve Editor
+- Serial port must be available (not used by other software)
+- This is a prerelease - expect bugs and missing features
+
+## Compatibility
+
+- **Tested Syscons**: CXR, CXRF (Mullion), SW
+- **Tested Models**: CECHAxx-CECHKxx, DECR-1400
+- **OS**: Windows 10/11, Linux, macOS
+- **Python**: 3.7, 3.8, 3.9, 3.10, 3.11, 3.12
+
+---
+
+**WARNING**: Incorrect use of this tool can brick your console. Always authenticate before patching and verify checksums after any EEPROM modifications. This is prerelease software - use at your own risk.
