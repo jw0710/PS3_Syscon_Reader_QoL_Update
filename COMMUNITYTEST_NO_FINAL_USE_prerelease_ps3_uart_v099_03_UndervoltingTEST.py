@@ -593,10 +593,10 @@ Internal Mode:
             messagebox.showerror("Error", "Please select serial port and SC type.")
             return None
         
-        if sc_type == "CXR":
-            serial_speed = "57600"
+        if sc_type in ("CXR","SW"):
+            serial_speed = "57600"  # CXR and SW are 57600
         else:
-            serial_speed = "115200"  # CXRF and SW use 115200
+            serial_speed = "115200"  # CXRF uses 115200
         
         return PS3UART(port, sc_type, serial_speed, sandbox_mode=sandbox)
 
