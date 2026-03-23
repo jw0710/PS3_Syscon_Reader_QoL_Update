@@ -10,6 +10,10 @@
 
 **WARNING:** THIS IS A PRE-RELEASE VERSION, USE WITH CARE! 
 
+<p align="center">
+  <img src="assets/main.png" width="800">
+</p>
+
 ## Overview
 
 Professional GUI tool for PS3 hardware modification, specifically designed for:
