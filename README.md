@@ -1,18 +1,18 @@
-# PS3 RSX Advanced Patching Tool
+# NostaDiag PS3
 
-> **A modern, user-friendly GUI for PS3 Syscon operations, RSX patching, and fan curve management**
+> **A modern, user-friendly GUI for PS3 Syscon operations, RSX patching, fan curve management and built-in helper**
 
 [![License](https://img.shields.io/badge/license-Educational-blue.svg)]()
-[![Status](https://img.shields.io/badge/status-Early%20Access-orange.svg)]()
+[![Status](https://img.shields.io/badge/status-v1.00-green.svg)]()
 [![Python](https://img.shields.io/badge/python-3.x-blue.svg)]()
+
+![NostaDiag PS3](gh_assets/main.png)
 
 **Note:** This documentation was originally written in German and translated to English using AI. Please report any unclear sections.
 
-**WARNING:** THIS IS A PRE-RELEASE VERSION, USE WITH CARE! 
+⚠️ **This is v1.00 – bugs may exist! Use at your own risk.**
 
-<p align="center">
-  <img src="assets/main.png" width="800">
-</p>
+---
 
 ## Overview
 
@@ -21,21 +21,33 @@ Professional GUI tool for PS3 hardware modification, specifically designed for:
 - **Syscon EEPROM** reading/writing
 - **Fan curve management** for FAT consoles (CXRF mode)
 - **Quick access** to common Syscon commands
+- **Built-in helper (Sysko)** with connection guides, error codes and setup walkthrough
 
-This tool provides a **modern interface** for operations traditionally requiring manual command entry, making PS3 hardware work more accessible and less error-prone.
+---
+
+## What's New in v1.00
+
+See [changelog_v1.00.txt](changelog_v1.00.txt) for full details.
+
+- **Sysko Helper** – built-in assistant (enable via checkbox)
+- **Serial Connection Points** – UART testpad images for all PS3 models
+- **Error Codes** – full PS3 Developer Wiki reference (PDF)
+- **Setup Guide** – first-time setup walkthrough
+- **White Mode** – activates together with Sysko
+- **Chippy** – our mascot, animates on hover, opens help menu on click
+- **Standalone .exe** – no Python installation required
+
+---
 
 ## Important Notice
 
-**THIS IS EARLY ACCESS SOFTWARE**
+**THIS IS v1.00 SOFTWARE**
 - Always verify outputs manually
 - Requires UART-TTL adapter hardware
 - For experienced users with PS3 hardware knowledge
-- **Use at your own risk** - no warranty provided
+- **Use at your own risk** – no warranty provided
 
-**This tool does NOT:**
-- Replace hardware requirements
-- Make decisions for you
-- Guarantee success on all systems
+---
 
 ## Key Features
 
@@ -46,18 +58,18 @@ This tool provides a **modern interface** for operations traditionally requiring
 - **Checksum verification** for EEPROM modifications
 
 ### Core Functions
-- **40nm/65nm RSX Patching** with model-specific options (AGB/BGB/CGB/DGB vs GGB)
+- **40nm/65nm RSX Patching** with model-specific options
 - **Automatic checksum correction** (32FE/34FE addresses)
 - **Internal/External mode patching** (CXR/CXRF)
 - **EEPROM read/write** operations
-- **Error log management** with clearing functionality
+- **Error log management**
 
 ### Advanced Features
 - **Interactive fan curve editor** with live graph visualization
-- **5-phase temperature management** (simplified interface)
 - **Preset profiles** (Stock, Quiet, Performance)
-- **Real-time temperature monitoring** via `tsensor`
+- **Real-time temperature monitoring**
 - **Drag-and-drop** curve editing
+- **Undervolting presets** for CELL and RSX
 
 ### Quick Commands
 - Boot/Error Count (`becount`)
@@ -67,10 +79,7 @@ This tool provides a **modern interface** for operations traditionally requiring
 - Firmware checksums
 - Authentication status
 
-### Built-in Documentation
-- **Command reference** with 100+ internal commands
-- **Inline help** for common operations
-- **Tooltips and warnings** for critical actions
+---
 
 ## Requirements
 
@@ -81,28 +90,30 @@ This tool provides a **modern interface** for operations traditionally requiring
 
 ### Software
 - Windows 10/11
-- Python 3.x (for source version)
-- Serial drivers for UART adapter
+- Python 3.x (for source version only)
 
 ### Python Dependencies
 ```bash
-pip install pyserial customtkinter pycryptodome matplotlib
+pip install pyserial customtkinter pycryptodomex pillow matplotlib
 ```
+
+---
 
 ## Installation
 
 ### Option 1: Executable (Recommended)
-1. Download the latest `.exe` from [Releases]()
-2. Run the Inno Setup installer
-3. Launch the application
+1. Download `NostaDiag_PS3_v1.00.exe` from [Releases](../../releases)
+2. Run the `.exe` – no installation needed
 
 ### Option 2: From Source
 ```bash
-git clone https://github.com/YOUR_USERNAME/ps3-rsx-tool.git
-cd ps3-rsx-tool
-pip install -r requirements.txt
-python ps3_uart_SIMPLIFIED_WORKING.py
+git clone https://github.com/jw0710/PS3_Syscon_Reader_QoL_Update.git
+cd PS3_Syscon_Reader_QoL_Update
+pip install -r requirments.txt
+python main/NostaDiag_PS3_v1.00.py
 ```
+
+---
 
 ## Quick Start
 
@@ -126,41 +137,7 @@ python ps3_uart_SIMPLIFIED_WORKING.py
    - Advanced Patching for RSX modifications
    - Fan Settings for thermal management (CXRF only)
 
-## Screenshots
-
-### Main Interface
-![Main Interface](Screenshots/CRXPatcher.PNG)
-
-### Fan Curve Editor
-![Fan Editor](Screenshots/FanCurve_with_PreSets.PNG)
-
-### RSX Patcher
-![RSX Patcher](Screenshots/RSXPatcher40nm.PNG)
-
-### Quick Commands
-![Quick Commands](Screenshots/quick_commands_Tab.PNG)
-
-## Usage Guide
-
-### RSX Patching (40nm/65nm)
-1. **Authenticate** first (mandatory)
-2. Select **40nm** or **65nm** patch
-3. For 40nm, choose model: AGB/BGB/CGB/DGB vs GGB
-4. Verify output in log
-5. Run **Checksum Correction** after patching
-
-### Fan Curve Management (CXRF only)
-1. Switch to **Fan Settings (FAT)** tab
-2. Load current values or preset
-3. Adjust temperatures and fan speeds
-4. Validation prevents dangerous configurations
-5. Save to console and fix checksum
-
-### Safety Features
-- **T-Shutdown warning** for values >85°C
-- **Ascending temperature validation** (phases must increase)
-- **TMax > TMin enforcement**
-- **Phase order checking**
+---
 
 ## SC Type Explanation
 
@@ -168,17 +145,17 @@ python ps3_uart_SIMPLIFIED_WORKING.py
 |------|-------------|-------------|
 | **CXR** | COK-001 (older FAT, no fan control) | Disabled |
 | **CXRF** | Mullion Syscon (FAT with fan tables) | Enabled |
-| **SW** | Slim consoles | Disabled |
+| **SW** | Slim/Super Slim consoles | Disabled |
+
+---
 
 ## Credits & Acknowledgments
 
-This project builds upon extensive community work:
-
-- **M4j0r** (PSX-Place Forum) - Reverse engineering contributions
-- **PSX-Place Community** - Frankenstein mod documentation
+- **M4j0r** (PSX-Place Forum) – Reverse engineering contributions
+- **PSX-Place Community** – Frankenstein mod documentation
 - Special thread: [Frankenstein PHAT PS3 CECHA with 40nm RSX](https://www.psx-place.com/threads/frankenstein-phat-ps3-cecha-with-40nm-rsx.28069/)
 
-All participants in PS3 Syscon reverse engineering and RSX swap experiments.
+---
 
 ## Educational Context
 
@@ -186,82 +163,23 @@ This is my **first major programming project**, created to:
 - Apply school programming lessons practically
 - Streamline personal PS3 modding workflow
 - Provide accessible tools for the community
-- Practice GUI design and Python development
-
-## Known Issues & Limitations
-
-- Some features require manual verification
-- Early Access status - bugs expected
-- Not all edge cases tested
-- Windows-only (currently)
-
-## Future Plans
-
-- Improved PS3 Slim support
-- Additional safety validations
-- Better error handling
-- More preset options
-- Internationalization
-
-## Legal & Disclaimer
-
-- **No warranties provided** - use at your own risk
-- Requires technical knowledge of PS3 hardware
-- **Private/educational use only** - no commercial use
-- All trademarks belong to their respective owners
-- No affiliation with Sony Interactive Entertainment
-- AI-generated logo
-
-**If you use this code or tool:**
-**Please provide credits** and link back to this repository
-
-## Philosophy
-
-> "Use your brain before your click"
-
-This tool **simplifies operations** but does not replace:
-- Technical understanding
-- Hardware knowledge
-- Manual verification
-- Critical thinking
-
-## Support & Contributing
-
-- **Issues**: Report bugs via GitHub Issues
-- **Suggestions**: Feature requests welcome
-- **Pull Requests**: Contributions appreciated
-- **Feedback**: Help improve stability and usability
-
-### Contribution Guidelines
-- Test thoroughly before submitting
-- Document changes clearly
-- Follow existing code style
-- Respect educational nature of project
-
-## License
-
-This project is provided for **educational and private use only**.
-
-```
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY.
-```
-
-## Star History
-
-If this tool helps you, consider giving it a star!
 
 ---
 
-**Made with care for the PS3 modding community**
+## Legal & Disclaimer
 
-*Remember: This is a tool to assist experienced users, not a "magic button" for beginners.*
+- **No warranties provided** – use at your own risk
+- Requires technical knowledge of PS3 hardware
+- **Private/educational use only** – no commercial use
+- No affiliation with Sony Interactive Entertainment
 
-Professional GUI tool for PS3 hardware modification, specifically designed for:
-- **RSX chip swapping** (40nm/65nm patching)
-- **Syscon EEPROM** reading/writing
-- **Fan curve management** for FAT consoles (CXRF mode)
-- **Quick access** to common Syscon commands
+> "Use your brain before your click"
 
-This tool provides a **modern interface** for operations traditionally requiring manual command entry, making PS3 hardware work more accessible and less error-prone.
+---
 
+## Support
+
+- **Issues**: Report bugs via GitHub Issues
+- **Instagram**: [NostaMods](https://www.instagram.com/nostamods/)
+
+If any errors occur – please let me know!
