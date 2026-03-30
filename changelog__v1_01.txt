@@ -1,0 +1,63 @@
+================================================================================
+ SysconDiag PS3 — Changelog
+ Version: v1.01
+================================================================================
+
+[FIX] Assets path resolution (chippy.gif)
+  - _get_assets_dir() used two dirname() calls, causing the assets folder
+    to resolve one level too high relative to the script location.
+  - Reduced to a single dirname() call — chippy.gif and all assets now
+    load correctly when the script is run from the project root.
+
+[FIX] Sandbox Mode triggering real serial connection
+  - _get_ps3_connection() passed the real COM port to PS3UART even in
+    sandbox mode, causing ser.open() to fire and throwing SerialException
+    with a semaphore timeout on Windows.
+  - Sandbox mode now bypasses the port entirely and instantiates PS3UART
+    with a dummy "SANDBOX" port string directly.
+
+[FIX] CXR->CXRF Patcher restart failing on paths with spaces
+  - os.execl() split the script path at spaces (e.g. "Neuer Ordner"),
+    causing Python to look for a non-existent file and crash on restart.
+  - Replaced with subprocess.Popen() using a list argument -> bypasses
+    shell parsing entirely, handles spaces in paths correctly.
+  - Root window now destroys itself cleanly 300ms after the new process
+    starts instead of being replaced in-place.
+
+[NEW] Dark / Light Mode Toggle (Apple-style)
+  - Added CTkSwitch toggle to the top-right corner of the title bar.
+  - Switches between Dark Mode (default) and Light Mode instantly.
+  - Visual: moon icon -> slider -> sun icon, white button, orange track
+    when Light Mode is active.
+
+[NEW] Sysko auto-enables Light Mode
+  - Sysko helper checkbox is now independent of the theme toggle.
+  - Enabling Sysko automatically switches to Light Mode and syncs the
+    toggle switch accordingly.
+  - Disabling Sysko or toggling back to Dark also hides Chippy and
+    resets the info label.
+
+[NEW] DPI Awareness
+  - Added SetProcessDpiAwareness(2) at startup to prevent Windows from
+    internally scaling the UI, eliminating blurriness on HiDPI displays.
+
+[NEW] Custom font support (Space Age)
+  - Heading font loads SpaceAge.ttf from assets/fonts/ at runtime via
+    Windows GDI -> no installation required, no admin rights needed.
+  - Falls back to Segoe UI silently if the file is not present.
+  - Font name verified against tkinter.font.families() after root window
+    init to ensure correct registration.
+
+[IMPROVED] Undervolt Tab -> Output Log
+  - Output log height increased and set to expand with the window.
+  - Layout row weights corrected so the log is always visible and does
+    not collapse to a single line.
+
+================================================================================
+ Previous versions
+================================================================================
+  v1.00     -> see changelog__v1.00.txt
+  v0.99_01  -> see changelog__v0.99_01.txt
+  v0.99     -> see changelog__v0.99.txt
+
+================================================================================
