@@ -1,12 +1,16 @@
-# PS3 RSX Advanced Patching Tool - SysconDiag
+# PS3 RSX Advanced Patching Tool — SysconDiag
 
 > **A modern GUI for PS3 Syscon operations, RSX patching, fan curve management, and built-in knowledge base**
 
+[![Version](https://img.shields.io/badge/version-v1.01-brightgreen.svg)](https://github.com/jw0710/PS3_Syscon_Reader_QoL_Update)
 [![License](https://img.shields.io/badge/license-Educational-blue.svg)](https://github.com/jw0710/PS3_Syscon_Reader_QoL_Update/blob/main/LICENSE)
 [![Status](https://img.shields.io/badge/status-Early%20Access-orange.svg)](https://github.com/jw0710/PS3_Syscon_Reader_QoL_Update)
 [![Python](https://img.shields.io/badge/python-3.x-blue.svg)](https://github.com/jw0710/PS3_Syscon_Reader_QoL_Update)
 
 > ⚠️ **PRE-RELEASE — Use with care. Always authenticate before patching. No warranty provided.**
+> 
+![SysconDiag Main](https://github.com/jw0710/PS3_Syscon_Reader_QoL_Update/raw/main/gh_assets/main.png)
+
 
 ---
 
