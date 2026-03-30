@@ -1,0 +1,71 @@
+NostaDiag PS3 – Changelog
+=========================
+
+Version 1.00  (2026-03-29)
+--------------------------
+
+NEW FEATURES
+  • Sysko Helper – built-in assistant, enabled via checkbox in the main window
+      - Chippy mascot GIF sits in the bottom-right corner of the main window
+      - Animates on hover, opens help menu on click (native context menu)
+      - Menu entries: "Serial Connection Points", "Errorcodes", "Setup"
+
+  • Serial Connection Points
+      - UART testpad images for all PS3 motherboard models
+      - Displayed in an image viewer window per model
+      - Covers: CECHA/B, CECHC/E, CECHG/H/J/K/L, CECHP/Q, CECH-20xx,
+                CECH-21xx, CECH-25xx, CECH-30xx, CECH-40xx/43xx
+
+  • Errorcodes
+      - Opens the PS3 Developer Wiki error code reference (PDF) via system viewer
+
+  • Setup Guide
+      - First-time setup walkthrough integrated directly into the helper menu
+      - Covers hardware setup, COM port selection, SC type, sandbox mode,
+        authentication, and basic operations
+
+  • White Mode
+      - Activates automatically together with Sysko Helper (checkbox)
+      - Deactivates when Sysko is disabled (returns to Dark Mode)
+      - Info label confirms active state: "White Mode active  •  Sysko is watching you"
+
+  • Chippy
+      - New mascot (chippy.gif) replaces placeholder graphics
+      - Transparent background composited correctly against UI background color
+      - Lazy frame loading: first frame shown immediately, remaining frames
+        loaded in batches to prevent UI freeze on startup
+
+  • Standalone .exe build
+      - PyInstaller onefile build (NostaDiag_PS3_v1.00.exe)
+      - All assets (images, PDF, GIF, icon) bundled inside the executable
+      - No Python installation required on target machine
+
+
+CHANGES
+  • Assets folder restructured – removed unused files:
+      background.png, background_tr.png, grey_Clippy.gif, logo.png,
+      nostaclippy.gif, nostaclippy_sprechblase.gif, nostaclippy_tr.gif
+
+  • GitHub assets moved to gh_assets/ folder (title image, screenshots)
+
+  • README completely rewritten for v1.00 release
+
+  • Added requirements.txt entry for Pillow (new dependency for Chippy GIF)
+
+  • Added logo.ico for taskbar / .exe icon
+
+
+BUG FIXES / INTERNAL
+  • GIF transparency: RGBA frames now correctly composited onto background
+    color before PhotoImage conversion – no more white or black corners
+  • GIF loading no longer blocks the UI on startup (lazy batch loading)
+  • PyInstaller asset path resolution via sys._MEIPASS for frozen builds
+
+
+---
+
+Version 0.99.03  (previous release)
+-------------------------------------
+  • Base version – RSX patching, Syscon EEPROM read/write, fan curve editor,
+    quick commands, sandbox mode, authentication flow
+  • See pre-release history on GitHub for earlier changes
