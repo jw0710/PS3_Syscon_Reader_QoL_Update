@@ -1,3 +1,24 @@
+# Moved to NostaDiag
+
+This project evolved into a full PS3 Syscon diagnostic toolkit.
+
+➡️ https://github.com/jw0710/NostaDiagV2
+
+This repo is now legacy/archived.
+
+
+
+
+
+
+-- -- -- -- -- --
+
+
+
+
+
+
+
 # PS3 RSX Advanced Patching Tool — SysconDiag
 
 > **A modern GUI for PS3 Syscon operations, RSX patching, fan curve management, and built-in knowledge base**
